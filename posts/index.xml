@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>ru</language>
     <copyright>&amp;copy; Артём Басамыкин, 2024</copyright>
-    <lastBuildDate>Fri, 23 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Инженерные практики с FreePascal</title>
+      <link>http://localhost:1313/posts/freepascal.html</link>
+      <pubDate>Sun, 25 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/freepascal.html</guid>
+      <description>Преимущества языка нормальная работа со строками UTF/ANSI быстрая компиляция нативный код можно накрутить умные указатели и не думать о памяти Юнит-тесты С тестами работа идёт затейливо: пишем программу-драйвер, в которой вызываем модуль с тестами, в котором вызываем тестируемый модуль. От первого модуля можно отказаться и писать тесты в программе-драйвере, но при росте кодовой базы разделять всё равно придётся.&#xA;Следствие №1 Тестировать можно только модули.&#xA;Следствие №2 Руками в консолечке собирать два приложения с разными флагами муторно, значит, нужна система сборки.</description>
+    </item>
     <item>
       <title>Технологии, с которыми я работал</title>
       <link>http://localhost:1313/posts/tech-i-worked-with.html</link>
