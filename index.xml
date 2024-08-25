@@ -7,22 +7,8 @@
     <generator>Hugo</generator>
     <language>ru</language>
     <copyright>&amp;copy; Артём Басамыкин, 2024</copyright>
-    <lastBuildDate>Sun, 25 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Инженерные практики с FreePascal</title>
-      <link>http://localhost:1313/posts/freepascal.html</link>
-      <pubDate>Sun, 25 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/freepascal.html</guid>
-      <description>Преимущества языка нормальная работа со строками UTF/ANSI быстрая компиляция нативный код можно накрутить умные указатели и не думать о памяти Юнит-тесты С тестами работа идёт затейливо: пишем программу-драйвер, в которой вызываем модуль с тестами, в котором вызываем тестируемый модуль. От первого модуля можно отказаться и писать тесты в программе-драйвере, но при росте кодовой базы разделять всё равно придётся.&#xA;Следствие №1 Тестировать можно только модули.&#xA;Следствие №2 Руками в консолечке собирать два приложения с разными флагами муторно, значит, нужна система сборки.</description>
-    </item>
-    <item>
-      <title>Настройка HUGO после установки</title>
-      <link>http://localhost:1313/posts/hugo.html</link>
-      <pubDate>Sat, 24 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/hugo.html</guid>
-      <description>Как и многие люди, к идиотам я себя привык не относить. Но в это раз пришлось, потому что гениальную задумку авторов hugo я понял только наполовину: генерация веб-страничек из файлов темы и из файлов Markdown - это прекрасно, но что где создавать после копирования темы, непонятно совершенно.&#xA;Пойдём по порядку.&#xA;Устанавливаем hugo по документации:&#xA;&amp;gt; scoop install hugo-extended Клонируем тему:&#xA;&amp;gt; git clone https://github.com/austingebauer/devise.git themes/devise А что делать дальше?&#xA;Обычно на этом месте руководство говорит &amp;ldquo;скопируйте шаблон из папки с темой, вставьте с заменой в корень, а затему запустите hugo командой hugo serve&amp;rdquo;.</description>
-    </item>
     <item>
       <title>Технологии, с которыми я работал</title>
       <link>http://localhost:1313/posts/tech-i-worked-with.html</link>
