@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2024-08-25T00:00:00+00:00</lastmod>
+    <loc>https://basamykin.github.io/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts.html</loc>
-    <lastmod>2024-08-25T00:00:00+00:00</lastmod>
+    <loc>https://basamykin.github.io/posts.html</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/freepascal.html</loc>
-    <lastmod>2024-08-25T00:00:00+00:00</lastmod>
+    <loc>https://basamykin.github.io/posts/smartptr.html</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/tech-i-worked-with.html</loc>
+    <loc>https://basamykin.github.io/posts/tech-i-worked-with.html</loc>
     <lastmod>2024-08-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories.html</loc>
+    <loc>https://basamykin.github.io/categories.html</loc>
   </url><url>
-    <loc>http://localhost:1313/tags.html</loc>
+    <loc>https://basamykin.github.io/tags.html</loc>
   </url>
 </urlset>

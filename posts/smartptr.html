@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ru"><head>
+    <title>basamykin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../css/theme.min.css">
+
+    
+    
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../images/avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../" class="text-decoration-none">
+                    artyom basamykin
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/basamykin" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://t.me/artyombasamykin" target="_blank">
+                            <i class="fab fa-telegram fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="artyom@basamykin.ru" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-4 ml-sm-5">
+        <p>Первое же, что пришло в голову после знакомства с FreePascal - это отсутствие умных указателей (smart pointers).</p>
+<p>В языке есть классы, есть дженерики - значит, можно сделать и умные указатели. Поиск в вебе подсказал, что я был прав, однако все реализации, что я видел, основывались на синтаксисе Delphi, а не FreePascal.</p>
+<p>Тогда я решил написать свою реализацию умных указателей, а заодно и получше узнать язык.</p>
+<p>Первое, что я сделал - нашёл способ профилировать память. Флаг компилятора <code>-gh</code> добавляет к выводу скомпилированной программу результат работы трассировки кучи (heaptrc):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">96</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">2196</span>/<span style="color:#00f">2488</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">96</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">2196</span>/<span style="color:#00f">2488</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">0</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">0</span>
+</span></span><span style="display:flex;"><span>True<span style="color:#bbb"> </span>heap<span style="color:#bbb"> </span>size<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">196608</span><span style="color:#bbb"> </span>(<span style="color:#00f">112</span><span style="color:#bbb"> </span>used<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">in</span><span style="color:#bbb"> </span>System<span style="color:#bbb"> </span>startup)
+</span></span><span style="display:flex;"><span>True<span style="color:#bbb"> </span>free<span style="color:#bbb"> </span>heap<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">196496</span></span></span></code></pre></div>
+<p>Найденные в интернетах реализации SmartPtr за основу брали record. Я решил, что для моих целей можно взять class, и ошибся: во FreePascal классы создаются только в куче. Это позволяет иметь виртуальный конструктор, но делает классы непригодными для умных указателей.</p>
+<p>Тогда я решил использовать object. Здесь нужно проговорить, что object пришли из Turbo Pascal, а class - из Delphi. Это две разные реализации ООП в одном компиляторе FPC.</p>
+<p>Объекты всегда создаются на стеке, что позволяет использовать их в качестве основы для нашего SmartPtr:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#008080">{$mode objfpc}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">object</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Create();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>Destroy();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>SmartPtr.Create();
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>SmartPtr.Destroy();
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Dispose(ptr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>p:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">PInteger</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;<span style="color:#000080;font-weight:bold">PInteger</span>&gt;;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
+<p>Проверяем:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">0</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">0</span>/<span style="color:#00f">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span></span></span></code></pre></div></p>
+<p>Видим, что память не освобождена: обязательно нужно вызвать конструктор перед использованием объекта, и деструктор - после. Получается, что мы ничего не добились - по-прежнему нужно вызывать деструктор руками.</p>
+<p>Придётся возвращаться к записям (record).</p>
+<p>В своём исходном виде записи имеют очень мало функциональности, но при использовании режима <code>{$modeswitch advancedrecords}</code> у них появляются class operator, в числе которых есть Finalize. Что мы получаем: структура данных, в которой есть переменные, есть оператор финализации, и которая размещается на стеке. Пробуем:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Dispose(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;</span></span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">0</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">0</span></span></span></code></pre></div>
+<p>Здорово! Но указатель на Integer это не наша цель, наша цель - обобщённый умный указатель.</p>
+<p>Для этого нужно подключить модуль <code>uses SysUtils;</code> и немного изменить метод Finalize:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>FreeMem(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;</span></span></code></pre></div>
+<p>Вот полный листинг модуля SmartPtrs.pas:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">unit</span><span style="color:#bbb"> </span>SmartPtrs;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">{$mode objfpc}</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">{$modeswitch advancedrecords}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">interface</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">implementation</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">uses</span><span style="color:#bbb"> </span>SysUtils;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>FreeMem(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
+<p>И пример его использования:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#008080">{$mode objfpc}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">uses</span><span style="color:#bbb"> </span>SmartPtrs;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Tclass<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;<span style="color:#000080;font-weight:bold">PInteger</span>&gt;;
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">//var ip: specialize SmartPtr&lt;Integer&gt;; // работать не будет</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>cp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;Tclass&gt;;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>p:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">PInteger</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
+<p>Теперь мы имеем умные указатели во FreePascal с полным контролем типа.</p>
+<p>Докажем, что SmartPtr правильно срабатывает при возникновении исключения:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">raise</span><span style="color:#bbb"> </span>Exception.Create(<span style="color:#00f">&#39;ooops!&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">101</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">2321</span>/<span style="color:#00f">2632</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">99</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">2245</span>/<span style="color:#00f">2552</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">2</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">76</span></span></span></code></pre></div>
+<p>Видим, что память не освобождена. Для проверки переносим всё под try/catch:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">try</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">raise</span><span style="color:#bbb"> </span>Exception.Create(<span style="color:#00f">&#39;ooops!&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">except</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">99</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">2276</span>/<span style="color:#00f">2576</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">99</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">2276</span>/<span style="color:#00f">2576</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">0</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">0</span></span></span></code></pre></div>
+<p>Почему FPC допускает утечки памяти при необработанном исключении? Ответ нашёлся в <a href="https://gitlab.com/freepascal.org/fpc/source/-/issues/33650">багтрекере</a> компилятора: это оставлено для совместимости с Delphi и со старым кодом.</p>
+<blockquote>
+<p>We&rsquo;ve discussed this in length on core. And finally decided that we should follow Delphi in this.
+This means that an uncatched exception leaks. The exception in the finally-section is not catched so the leak is expected.
+It is very difficult to change this behavior and can have all kinds of unexpected side-effects.</p>
+</blockquote>
+<p>Делаем вывод: при необработанном исключении memory leak - это задуманное поведение, эту память почистит операционная система. А наш класс умного указателя корректно освобождает память даже при возникновении (обработанного) исключения, что и требовалось доказать.</p>
+
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Артём Басамыкин, 2024
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>
