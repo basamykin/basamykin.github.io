@@ -17,11 +17,11 @@
       <description>Первое же, что пришло в голову после знакомства с FreePascal - это отсутствие умных указателей (smart pointers).&#xA;В языке есть классы, есть дженерики - значит, можно сделать и умные указатели. Поиск в вебе подсказал, что я был прав, однако все реализации, что я видел, основывались на синтаксисе Delphi, а не FreePascal.&#xA;Тогда я решил написать свою реализацию умных указателей, а заодно и получше узнать язык.&#xA;Первое, что я сделал - нашёл способ профилировать память.</description>
     </item>
     <item>
-      <title>Технологии, с которыми я работал</title>
+      <title>С чем я работал</title>
       <link>https://basamykin.github.io/posts/tech-i-worked-with.html</link>
       <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
       <guid>https://basamykin.github.io/posts/tech-i-worked-with.html</guid>
-      <description>Windows XP-11, Server 2008-2016.&#xA;Linux Debian, Ubuntu, Manjaro, Fedora.&#xA;Android 7-12.&#xA;Lua, Delphi/FreePascal, C17, C++20, JavaScript ES5 и ES6 (мало), Python.&#xA;Oracle PL/SQL, sqlite.&#xA;UDP Multicast, SOAP, REST, Websockets.&#xA;FIS Platform (Case Platform).&#xA;JustAI JAICP.&#xA;GPT-4o, Llama 2/3 (KoboldCpp), Stable Diffusion XL.</description>
+      <description>Windows XP-11. Основная система ради офиса и Steam.&#xA;Windows Server 2008-2016 (на 2016 запускал KoboldCpp; серверы Xeon, как правило, не содержат нужных наборов инструкций CPU, поэтому приходилось пересобирать под них C++ библиотеки, линкуя CUDA. А уж установка свежих видеодрайверов Nvidia туда - вообще цирк с распаковкой exe).&#xA;Linux From Scratch, Debian, Ubuntu, Manjaro, Fedora, Alpine, Simply Linux. Долго и часто использовал Ubuntu и Manjaro для повседневной работы, каждая по-своему хороша.</description>
     </item>
   </channel>
 </rss>
