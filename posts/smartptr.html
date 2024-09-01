@@ -8,7 +8,7 @@
     
     
     
-    <link rel="stylesheet" href="../css/theme.min.css">
+    <link rel="stylesheet" href="/css/theme.min.css">
 
     
     
@@ -19,11 +19,11 @@
     <div class="row">
         
         <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
-            <a href="../" class="text-decoration-none">
+            <a href="/" class="text-decoration-none">
                 <img id="home-image" class="rounded-circle"
                     
                         
-                            src="../images/avatar.jpg"
+                            src="/images/avatar.jpg"
                         
                     
                 />
@@ -32,7 +32,7 @@
         <div class="col-sm-8 col-12 text-sm-left text-center">
         
             <h2 class="m-0 mb-2 mt-4">
-                <a href="../" class="text-decoration-none">
+                <a href="/" class="text-decoration-none">
                     artyom basamykin
                 </a>
             </h2>
@@ -142,11 +142,9 @@
 </span></span><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
 </span></span><span style="display:flex;"><span><span style="color:#00f">0</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">0</span></span></span></code></pre></div>
 <p>Здорово! Но указатель на Integer это не наша цель, наша цель - обобщённый умный указатель.</p>
+<p>А вот это сделать без RTTI (run-time type information) не получилось, а RTTI увеличивает размер программы и уменьшает производительность.</p>
+<p>Пришлось создать два класса: SmartPtr для указателей на значения, не требующие деструктора, и ClassPtr, вызывающий деструктор.</p>
 <p>Для этого нужно подключить модуль <code>uses SysUtils;</code> и немного изменить метод Finalize:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
-</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>FreeMem(sp.ptr);
-</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;</span></span></code></pre></div>
 <p>Вот полный листинг модуля SmartPtrs.pas:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">unit</span><span style="color:#bbb"> </span>SmartPtrs;
 </span></span><span style="display:flex;"><span>
@@ -162,9 +160,17 @@
 </span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>ClassPtr&lt;T:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">implementation</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">uses</span><span style="color:#bbb"> </span>SysUtils;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">{ ScalarPtr }</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
@@ -173,24 +179,51 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>FreeMem(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Dispose(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">{ ClassPtr }</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>ClassPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>ClassPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr.Destroy;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
 <p>И пример его использования:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#008080">{$mode objfpc}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#080;font-style:italic">{ fpc -gh test &amp;&amp; test }</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">uses</span><span style="color:#bbb"> </span>SmartPtrs;
+</span></span><span style="display:flex;"><span><span style="color:#008080">{$mode objfpc}</span>
+</span></span><span style="display:flex;"><span><span style="color:#008080">{$modeswitch advancedrecords}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">uses</span><span style="color:#bbb"> </span>SmartPtrs,<span style="color:#bbb"> </span>SysUtils;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
 </span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
 </span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>
 </span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Tclass<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Create();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb">  </span>Destroy();
 </span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;<span style="color:#000080;font-weight:bold">PInteger</span>&gt;;
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Tclass.Create();
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>WriteLn(<span style="color:#00f">&#39;constructor&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>Tclass.Destroy();
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>WriteLn(<span style="color:#00f">&#39;destructor&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>ScalarPtr&lt;<span style="color:#000080;font-weight:bold">PInteger</span>&gt;;
 </span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">//var ip: specialize SmartPtr&lt;Integer&gt;; // работать не будет</span><span style="color:#bbb">
-</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>cp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;Tclass&gt;;
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>cp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>ClassPtr&lt;Tclass&gt;;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>p:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">PInteger</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
