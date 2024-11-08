@@ -7,21 +7,28 @@
     <generator>Hugo</generator>
     <language>ru</language>
     <copyright>&amp;copy; Артём Басамыкин, 2024</copyright>
-    <lastBuildDate>Fri, 30 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://basamykin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Мой GTD</title>
+      <link>https://basamykin.github.io/posts/gtdsetup.html</link>
+      <pubDate>Fri, 08 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://basamykin.github.io/posts/gtdsetup.html</guid>
+      <description>&lt;p&gt;GTD, Getting Things Done, &amp;ldquo;Как разобраться с делами&amp;rdquo; - это метод организации, придуманный Дэвидом Алленом и описанный им в одноимённой книге. Я придерживаюсь GTD, и мне нравятся результаты.&lt;/p&gt;&#xA;&lt;p&gt;Я использую полностью безбумажный подход, все мои проекты, заметки, списки - это файлы и папки в Windows. Я пользуюсь смартфоном, ноутбуком и ПК, и вот здесь начинается всё самое интересное:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;как синхронизировать чувствительные данные?&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;как синхронизировать все остальные данные, при условии, что на ПК 2 ТБ данных, на на ноутбуке только 500 ГБ SSD, а на смартфоне и вовсе 256 ГБ?&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Умные указатели во FreePascal</title>
       <link>https://basamykin.github.io/posts/smartptr.html</link>
       <pubDate>Fri, 30 Aug 2024 00:00:00 +0000</pubDate>
       <guid>https://basamykin.github.io/posts/smartptr.html</guid>
-      <description>Первое же, что пришло в голову после знакомства с FreePascal - это отсутствие умных указателей (smart pointers).&#xA;В языке есть классы, есть дженерики - значит, можно сделать и умные указатели. Поиск в вебе подсказал, что я был прав, однако все реализации, что я видел, основывались на синтаксисе Delphi, а не FreePascal.&#xA;Тогда я решил написать свою реализацию умных указателей, а заодно и получше узнать язык.&#xA;Первое, что я сделал - нашёл способ профилировать память.</description>
+      <description>&lt;p&gt;Первое же, что пришло в голову после знакомства с FreePascal - это отсутствие умных указателей (smart pointers).&lt;/p&gt;&#xA;&lt;p&gt;В языке есть классы, есть дженерики - значит, можно сделать и умные указатели. Поиск в вебе подсказал, что я был прав, однако все реализации, что я видел, основывались на синтаксисе Delphi, а не FreePascal.&lt;/p&gt;&#xA;&lt;p&gt;Тогда я решил написать свою реализацию умных указателей, а заодно и получше узнать язык.&lt;/p&gt;&#xA;&lt;p&gt;Первое, что я сделал - нашёл способ профилировать память. Флаг компилятора &lt;code&gt;-gh&lt;/code&gt; добавляет к выводу скомпилированной программу результат работы трассировки кучи (heaptrc):&lt;/p&gt;</description>
     </item>
     <item>
       <title>С чем я работал</title>
       <link>https://basamykin.github.io/posts/tech-i-worked-with.html</link>
       <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
       <guid>https://basamykin.github.io/posts/tech-i-worked-with.html</guid>
-      <description>Windows XP-11. Основная система ради офиса и Steam.&#xA;Windows Server 2008-2016 (на 2016 запускал KoboldCpp; серверы Xeon, как правило, не содержат нужных наборов инструкций CPU, поэтому приходилось пересобирать под них C++ библиотеки, линкуя CUDA. А уж установка свежих видеодрайверов Nvidia туда - вообще цирк с распаковкой exe).&#xA;Linux From Scratch, Debian, Ubuntu, Manjaro, Fedora, Alpine, Simply Linux. Долго и часто использовал Ubuntu и Manjaro для повседневной работы, каждая по-своему хороша.</description>
+      <description>&lt;p&gt;Windows XP-11. Основная система ради офиса и Steam.&lt;/p&gt;&#xA;&lt;p&gt;Windows Server 2008-2016 (на 2016 запускал KoboldCpp; серверы Xeon, как правило, не содержат нужных наборов инструкций CPU, поэтому приходилось пересобирать под них C++ библиотеки, линкуя CUDA. А уж установка свежих видеодрайверов Nvidia туда - вообще цирк с распаковкой exe).&lt;/p&gt;&#xA;&lt;p&gt;Linux From Scratch, Debian, Ubuntu, Manjaro, Fedora, Alpine, Simply Linux. Долго и часто использовал Ubuntu и Manjaro для повседневной работы, каждая по-своему хороша.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

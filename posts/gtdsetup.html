@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru"><head>
+    <title>basamykin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/theme.min.css">
+
+    
+    
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="/" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="/images/avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="/" class="text-decoration-none">
+                    artyom basamykin
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/basamykin" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://t.me/artyombasamykin" target="_blank">
+                            <i class="fab fa-telegram fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:artyom@basamykin.ru" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://pay.cloudtips.ru/p/7ec23802" target="_blank">
+                            <i class="fas fa-ruble-sign fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-4 ml-sm-5">
+        <p>GTD, Getting Things Done, &ldquo;Как разобраться с делами&rdquo; - это метод организации, придуманный Дэвидом Алленом и описанный им в одноимённой книге. Я придерживаюсь GTD, и мне нравятся результаты.</p>
+<p>Я использую полностью безбумажный подход, все мои проекты, заметки, списки - это файлы и папки в Windows. Я пользуюсь смартфоном, ноутбуком и ПК, и вот здесь начинается всё самое интересное:</p>
+<ul>
+<li>
+<p>как синхронизировать чувствительные данные?</p>
+</li>
+<li>
+<p>как синхронизировать все остальные данные, при условии, что на ПК 2 ТБ данных, на на ноутбуке только 500 ГБ SSD, а на смартфоне и вовсе 256 ГБ?</p>
+</li>
+<li>
+<p>как сделать создание файлов и папок быстрым и удобным, чтобы обработка заметки занимала секунды?</p>
+</li>
+</ul>
+<p>Здесь понадобились мои навыки. На данный момент, схема получилась такая:</p>
+<ul>
+<li>
+<p>папка Documents синхронизируется с помощью Syncthing на всех Windows и на Android, здесь лежат ежедневные документы и папки текущих проектов</p>
+<ul>
+<li>
+<p>здесь же лежит папка Obsidian</p>
+</li>
+<li>
+<p>здесь же лежит папка Todo.txt, файлы из которой я открываю с помощью Sleek</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Все остальные файлы разложены по папкам на не-системных дисках ноутбука и ПК в виде одноуровневой структуры</p>
+</li>
+<li>
+<p>ноутбук и ПК объединены в локальную сеть, не-системные диски пошарены для моего пользователя Windows</p>
+</li>
+<li>
+<p>для поиска файлов по всем пошаренным дискам + Documents я использую Everything</p>
+</li>
+</ul>
+<p>Разберём по компонентам:</p>
+<ul>
+<li>
+<p>Obsidian - очень удобное приложение для создания заметок, я настроил встроенный плагин для создания уникальных заметок так, чтобы по Ctrl+U (от слова unique) в папке Obsidian/Inbox создавалась заметка с меткой времени (unix timestamp) в имени, например, 1731046405858.md. Благодаря этому всегда можно узнать, когда была создана заметка, а ещё работает естественная сортировка по имени. Ну и плюс, само имя файла мне не принципиально - файл открывается и просматривается за секунду, а при необходимости его можно и переименовать. Главное, что теперь создать заметку и копипастнуть в неё нужный текст занимает тоже секунду. А по Ctrl+M (от move) можно перенести заметку в другую папку, например, новую. Это значительно ускоряет еженедельное ревью.</p>
+</li>
+<li>
+<p>Sleek - одна из реализаций Todo.txt, имеет неплохой интерфейс, поддерживает повторяющиеся и отложенные задачи, а ещё приоритеты. Для меня это стало киллер-фичей, потому что я всегда стремился объединить GTD с матрицей Эйзенхауэра, а приоритеты A/B/C однозначно маппятся на значимые квадранты матрицы.</p>
+</li>
+<li>
+<p>Syncthing - приватная синхронизация файлов в локальной сети, здесь не страшно хранить свои документы и заметки.</p>
+</li>
+<li>
+<p>Everything - отличная программа для поиска файлов, которая умеет искать в том числе и по локальным шарам. Программа составляет индекс имён файлов в своей базе, поэтому поиск работает моментально. В моей настройке индекс обновляется раз в 6 часов.</p>
+</li>
+</ul>
+
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Артём Басамыкин, 2024
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

@@ -91,29 +91,29 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#008080">{$mode objfpc}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">object</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Create();
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>Destroy();
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">object</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Create();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>Destroy();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>SmartPtr.Create();
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>SmartPtr.Destroy();
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Dispose(ptr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Dispose(ptr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>p:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">PInteger</span>;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;<span style="color:#000080;font-weight:bold">PInteger</span>&gt;;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>new(p);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
 <p>Проверяем:
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
@@ -123,20 +123,20 @@
 <p>Придётся возвращаться к записям (record).</p>
 <p>В своём исходном виде записи имеют очень мало функциональности, но при использовании режима <code>{$modeswitch advancedrecords}</code> у них появляются class operator, в числе которых есть Finalize. Что мы получаем: структура данных, в которой есть переменные, есть оператор финализации, и которая размещается на стеке. Пробуем:
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Dispose(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Dispose(sp.ptr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;</span></span></code></pre></div></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
 </span></span><span style="display:flex;"><span><span style="color:#00f">1</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">4</span>/<span style="color:#00f">8</span>
@@ -153,17 +153,17 @@
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">interface</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>generic<span style="color:#bbb"> </span>SmartPtr&lt;T&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>generic<span style="color:#bbb"> </span>ClassPtr&lt;T:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>Ptr:<span style="color:#bbb"> </span>T;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>generic<span style="color:#bbb"> </span>ClassPtr&lt;T:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>&gt;<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">record</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>Ptr:<span style="color:#bbb"> </span>T;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">implementation</span>
 </span></span><span style="display:flex;"><span>
@@ -171,24 +171,24 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>SmartPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>SmartPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Dispose(sp.ptr);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Dispose(sp.ptr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">{ ClassPtr }</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>ClassPtr.Initialize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">nil</span>;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">class</span><span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">operator</span><span style="color:#bbb"> </span>ClassPtr.Finalize(<span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>ClassPtr);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr.Destroy;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr.Destroy;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
@@ -201,21 +201,21 @@
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">uses</span><span style="color:#bbb"> </span>SmartPtrs,<span style="color:#bbb"> </span>SysUtils;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">type</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>Tclass<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Create();
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb">  </span>Destroy();
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">PInteger</span><span style="color:#bbb"> </span>=<span style="color:#bbb"> </span>^<span style="color:#000080;font-weight:bold">Integer</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>Tclass<span style="color:#bbb"> </span>=<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">class</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Create();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb">  </span>Destroy();
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">constructor</span><span style="color:#bbb"> </span>Tclass.Create();
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>WriteLn(<span style="color:#00f">&#39;constructor&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>WriteLn(<span style="color:#00f">&#39;constructor&#39;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">destructor</span><span style="color:#bbb"> </span>Tclass.Destroy();
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>WriteLn(<span style="color:#00f">&#39;destructor&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>WriteLn(<span style="color:#00f">&#39;destructor&#39;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>sp:<span style="color:#bbb"> </span>specialize<span style="color:#bbb"> </span>SmartPtr&lt;<span style="color:#000080;font-weight:bold">PInteger</span>&gt;;
@@ -224,30 +224,30 @@
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">var</span><span style="color:#bbb"> </span>p:<span style="color:#bbb"> </span><span style="color:#000080;font-weight:bold">PInteger</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>new(p);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
 <p>Теперь мы имеем умные указатели во FreePascal с полным контролем типа.</p>
 <p>Докажем, что SmartPtr правильно срабатывает при возникновении исключения:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>new(p);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">raise</span><span style="color:#bbb"> </span>Exception.Create(<span style="color:#00f">&#39;ooops!&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">raise</span><span style="color:#bbb"> </span>Exception.Create(<span style="color:#00f">&#39;ooops!&#39;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">101</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">2321</span>/<span style="color:#00f">2632</span>
 </span></span><span style="display:flex;"><span><span style="color:#00f">99</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">2245</span>/<span style="color:#00f">2552</span>
 </span></span><span style="display:flex;"><span><span style="color:#00f">2</span><span style="color:#bbb"> </span>unfreed<span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">76</span></span></span></code></pre></div>
 <p>Видим, что память не освобождена. Для проверки переносим всё под try/catch:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">begin</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">try</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>new(p);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
-</span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#000080;font-weight:bold">raise</span><span style="color:#bbb"> </span>Exception.Create(<span style="color:#00f">&#39;ooops!&#39;</span>);
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">except</span>
-</span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#000080;font-weight:bold">end</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">try</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>new(p);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>sp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>p;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span>cp.ptr<span style="color:#bbb"> </span>:=<span style="color:#bbb"> </span>Tclass.Create;
+</span></span><span style="display:flex;"><span><span style="color:#bbb">        </span><span style="color:#000080;font-weight:bold">raise</span><span style="color:#bbb"> </span>Exception.Create(<span style="color:#00f">&#39;ooops!&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">except</span>
+</span></span><span style="display:flex;"><span><span style="color:#bbb">    </span><span style="color:#000080;font-weight:bold">end</span>;
 </span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">end</span>.</span></span></code></pre></div>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectpascal" data-lang="objectpascal"><span style="display:flex;"><span><span style="color:#00f">99</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>allocated<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span><span style="color:#00f">2276</span>/<span style="color:#00f">2576</span>
 </span></span><span style="display:flex;"><span><span style="color:#00f">99</span><span style="color:#bbb"> </span>memory<span style="color:#bbb"> </span>blocks<span style="color:#bbb"> </span>freed<span style="color:#bbb">     </span>:<span style="color:#bbb"> </span><span style="color:#00f">2276</span>/<span style="color:#00f">2576</span>
