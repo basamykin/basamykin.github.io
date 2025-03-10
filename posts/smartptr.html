@@ -256,8 +256,7 @@
 <blockquote>
 <p>We&rsquo;ve discussed this in length on core. And finally decided that we should follow Delphi in this.
 This means that an uncatched exception leaks. The exception in the finally-section is not catched so the leak is expected.
-It is very difficult to change this behavior and can have all kinds of unexpected side-effects.</p>
-</blockquote>
+It is very difficult to change this behavior and can have all kinds of unexpected side-effects.</p></blockquote>
 <p>Делаем вывод: при необработанном исключении memory leak - это задуманное поведение, эту память почистит операционная система. А наш класс умного указателя корректно освобождает память даже при возникновении (обработанного) исключения, что и требовалось доказать.</p>
 
     </div>
